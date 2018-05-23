@@ -2,7 +2,7 @@
 <html lang="en-US">
   <head>
     <meta charset="utf-8">
-    <title>Hangman game created to learn JS</title>
+    <title>Hangman</title>
 
     <meta name="author" content="Max Zheng">
     <meta name="description" content="This is a web app which plays the game
@@ -12,7 +12,32 @@
     <link rel="Shortcut Icon" href="favicon.png" type="image/x-icon">
   </head>
   <body>
-    <p> This is the text </p>
+
+    <div class="intro">
+      <p>You are playing Hangman. You need 2 players. The first player will enter a secret word.
+        The second player will try to guess the word by guessing letters. After 6 incorrect letter guesses, you lose!</p>
+      <label for="secretWord">First player enter the secret word: </label>
+      <input type="text" id="secretWord" class="secretWord">
+      <input type="submit" value="Submit word" class="wordSubmit"><br>
+      <label for="randomWord">Or get a random word: </label>
+      <input type="submit" value="Random" class="randomWord"><br>
+      <img src="intropic.jpg" alt="This is hangman" style="width:500px;height:300px;">
+    </div>
+    <div class="gameStart">
+      <span id="guessMessage"></span><br>
+      <label for="letterGuess">Guess a letter: </label>
+      <input type="text" id="letterGuess" class="letterGuess" maxlength="1"><br>
+      <input type="submit" value="Guess letter" class="letterGuess">
+    </div>
+    <div class=""
+
+    <div class="gameVars">
+      <p class="lettersGuessed"></p>
+      <p class="displayWord"></p>
+      <p class="gameText"></p>
+    </div>
+
+    <script src = "gamelogic.js"></script>
 
   </body>
 </html>
