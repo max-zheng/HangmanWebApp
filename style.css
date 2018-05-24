@@ -44,6 +44,18 @@ body {
   background-color: white;
 }
 
+.errorMessage {
+  border: 2px solid red;
+  border-radius: 15px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 75%;
+  font-family: Arial Black;
+  font-size: 12px;
+  background-color: white;
+}
+
 .image {
   width:500px;
   height:300px;
@@ -58,27 +70,6 @@ body {
   border-radius: 15px;
 }
 
-.displayWord {
-  font-size: 35px;
-  border: 2px solid red;
-  border-radius: 2px;
-  background-color: white;
-}
-
-.lettersGuessed {
-  font-size: 35px;
-  border: 2px solid red;
-  border-radius: 15px;
-  background-color: white;
-}
-
-.displayMessage {
-  font-size: 20px;
-  border: 2px solid red;
-  border-radius: 15px;
-  background-color: white;
-}
-
 .column {
     float: left;
     width: 50%;
@@ -89,4 +80,17 @@ body {
     content: "";
     display: table;
     clear: both;
+}
+
+.bottomBox {
+  font-size: 35px;
+  border: 2px solid red;
+  background-color: white;
+}
+
+.resetButton {
+  width: 150px;
+  height:75px;
+  background-color: red;
+  font-family: Arial Black;
 }
