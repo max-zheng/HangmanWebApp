@@ -14,14 +14,16 @@
   <body>
 
     <div class="intro">
-      <p>You are playing Hangman. You need 2 players. The first player will enter a secret word.
-        The second player will try to guess the word by guessing letters. After 5 incorrect letter guesses, you lose!</p>
-      <label for="secretWord">First player enter the secret word: </label>
+      <img src="logo.png" class="logo" alt="Hangman">
+      <div class="boxed">You are playing Hangman. You need 2 players. The first player will enter a secret word.
+        The second player will try to guess the word by guessing letters in the word. After 5 incorrect letter guesses, you lose!
+      </div><br>
+      <label for="secretWord">Player 1 enter the secret word: </label>
       <input type="text" id="secretWord" class="secretWord">
-      <input type="submit" value="Submit word" class="wordSubmit"><br>
-      <label for="randomWord">Or get a random word: </label>
-      <input type="submit" value="Random" class="randomWord"><br>
-      <img src="intropic.jpg" alt="This is hangman" style="width:500px;height:300px;">
+      <input type="submit" value="Submit" class="wordSubmitButton">
+      <label for="randomWord">Or use a random word: </label>
+      <input type="submit" value="Random" class="randomWord"><br><br>
+      <img src="intropic.jpg" alt="This is hangman"class="image">
     </div>
     <div class="gameStart">
       <label for="letterGuess">Guess a letter: </label>

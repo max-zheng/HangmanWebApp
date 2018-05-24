@@ -4,7 +4,7 @@ var displayWord = document.querySelector('.displayWord');
 var lettersGuessed = document.querySelector('.lettersGuessed');
 var displayMessage = document.querySelector('.displayMessage');
 
-var wordSubmit = document.querySelector('.wordSubmit');
+var wordSubmitButton = document.querySelector('.wordSubmitButton');
 var guessButton = document.querySelector('.guessButton');
 var secretWord = document.querySelector('.secretWord');
 
@@ -74,13 +74,15 @@ function guessLetter() {
 function checkWinOrLoss() {
   if(lettersRevealed === secretWord.value.length) {
     displayMessage.textContent = 'You win!!!'
+    guessButton.disabled = true;
     return;
   }
   if(guessCount === 0) {
     displayMessage.textContent = 'You lose!!'
+    guessButton.disabled = true;
     return;
   }
 }
 
-wordSubmit.addEventListener('click', setupGame);
+wordSubmitButton.addEventListener('click', setupGame);
 guessButton.addEventListener('click', guessLetter);
