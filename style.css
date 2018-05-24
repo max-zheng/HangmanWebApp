@@ -52,8 +52,8 @@ body {
 }
 
 .guessPics {
-  width:250px;
-  height:215px;
+  width:400px;
+  height:325px;
   border: 2px solid red;
   border-radius: 15px;
 }
@@ -68,6 +68,25 @@ body {
 .lettersGuessed {
   font-size: 35px;
   border: 2px solid red;
-  border-radius: 2px;
+  border-radius: 15px;
   background-color: white;
+}
+
+.displayMessage {
+  font-size: 20px;
+  border: 2px solid red;
+  border-radius: 15px;
+  background-color: white;
+}
+
+.column {
+    float: left;
+    width: 50%;
+}
+
+/* Clear floats after the columns */
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
 }

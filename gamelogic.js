@@ -6,16 +6,15 @@ var displayMessage = document.querySelector('.displayMessage');
 
 var guessPics = document.querySelector('.pics');
 
-alert(guessPics.childNodes[5]);
-
 var wordSubmitButton = document.querySelector('.wordSubmitButton');
 var guessButton = document.querySelector('.guessButton');
 var secretWord = document.querySelector('.secretWord');
+var resetButton = document.querySelector('.resetButton');
 
 var guessCount = 5;
 var lettersRevealed = 0;
 var displayImage = 1;
-var resetButton;
+
 var guessCharSet = new Set();
 
 var intro = document.querySelector('.intro');
@@ -43,21 +42,28 @@ function setupGame() {
 
   lettersGuessed.textContent = "Letters guessed: ";
 
-   gameStart.style.display = 'initial';
+  displayMessage.style.display = 'none';
+
+  gameStart.style.display = 'initial';
+  // start with 1 and skip 2 each time, every other node is a text and we only want images
   for (var i = 1; i <= 11; i+=2) {
     guessPics.childNodes[i].style.display = 'none';
   }
 
   guessPics.childNodes[displayImage].style.display = 'initial';
+
+  resetButton.style.display = 'none';
+
 }
 
 function guessLetter() {
   if (guessCharSet.has(letterGuess.value)) {
-    displayMessage.textContent = "You have already guessed that number!";
-    displayMessage.style.backgroundColor = 'blue';
+    displayMessage.textContent = "You have already guessed that letter!";
+    displayMessage.style.display = 'initial';
     return;
   }
   guessCharSet.add(letterGuess.value);
+  displayMessage.style.display = 'none';
 
   var letterFound = false;
   for (var i = 0; i < secretWord.value.length; i++) {
@@ -85,16 +91,33 @@ function guessLetter() {
 
 function checkWinOrLoss() {
   if(lettersRevealed === secretWord.value.length) {
+    displayMessage.style.display = 'initial';
     displayMessage.textContent = 'You win!!!'
     guessButton.disabled = true;
+    resetButton.style.display = 'initial';
     return;
   }
   if(guessCount === 0) {
+    displayMessage.style.display = 'initial';
     displayMessage.textContent = 'You lose!!'
     guessButton.disabled = true;
+    resetButton.style.display = 'initial';
     return;
   }
 }
 
+function resetGame() {
+  displayMessage.style.display = 'none';
+  guessButton.disabled = false;
+  guessCount = 5;
+  guessCharSet = new Set();
+  lettersRevealed = 0;
+  displayImage = 1;
+  wordToDisplay = "";
+  gameStart.style.display = 'none';
+  intro.style.display = 'initial';
+}
+
 wordSubmitButton.addEventListener('click', setupGame);
 guessButton.addEventListener('click', guessLetter);
+resetButton.addEventListener('click',resetGame);

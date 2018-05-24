@@ -26,10 +26,20 @@
       <img src="intropic.jpg" alt="This is hangman"class="image">
     </div>
     <div class="gameStart">
-      <label for="letterGuess">Guess a letter: </label>
-      <input type="text" id="letterGuess" class="letterGuess" maxlength="1">
-      <input type="submit" value="Guess letter" class="guessButton"><br><br>
-      <div class="pics">
+    <div class="column">
+      <br><br><label for="letterGuess">Guess a letter: </label>
+      <input type="text" id="letterGuess" class="letterGuess" maxlength="1" style="width: 8px">
+      <input type="submit" value="Guess letter" class="guessButton">
+      <div class="gameVars">
+        <p class="guessesLeftMessage"></p>
+        <p class="gameText"></p>
+        <span class="displayWord"></span><br><br>
+        <span class="lettersGuessed"></span><br><br>
+        <span class="displayMessage"></span>
+      </div>
+    </div>
+    <div class="column">
+      <br><div class="pics">
         <img src="guesspics/0.png" class="guessPics">
         <img src="guesspics/1.png" class="guessPics">
         <img src="guesspics/2.png" class="guessPics">
@@ -38,14 +48,9 @@
         <img src="guesspics/5.png" class="guessPics">
       </div>
     </div>
-
-    <div class="gameVars">
-      <p class="guessesLeftMessage"></p>
-      <p class="gameText"></p>
-      <span class="displayWord"></span><br><br>
-      <span class="lettersGuessed"></span><br>
-      <span class="displayMessage"></span>
-    </div>
+    <br>
+    <br>
+    <input type="submit" value="New Game" class="resetButton">
 
     <script src = "gamelogic.js"></script>
 
