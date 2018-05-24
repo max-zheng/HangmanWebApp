@@ -4,12 +4,17 @@ var displayWord = document.querySelector('.displayWord');
 var lettersGuessed = document.querySelector('.lettersGuessed');
 var displayMessage = document.querySelector('.displayMessage');
 
+var guessPics = document.querySelector('.pics');
+
+alert(guessPics.childNodes[5]);
+
 var wordSubmitButton = document.querySelector('.wordSubmitButton');
 var guessButton = document.querySelector('.guessButton');
 var secretWord = document.querySelector('.secretWord');
 
 var guessCount = 5;
 var lettersRevealed = 0;
+var displayImage = 1;
 var resetButton;
 var guessCharSet = new Set();
 
@@ -38,8 +43,12 @@ function setupGame() {
 
   lettersGuessed.textContent = "Letters guessed: ";
 
-  gameStart.style.display = 'initial';
+   gameStart.style.display = 'initial';
+  for (var i = 1; i <= 11; i+=2) {
+    guessPics.childNodes[i].style.display = 'none';
+  }
 
+  guessPics.childNodes[displayImage].style.display = 'initial';
 }
 
 function guessLetter() {
@@ -62,6 +71,9 @@ function guessLetter() {
 
   if(letterFound === false) {
     guessCount --;
+    guessPics.childNodes[displayImage].style.display = 'none';
+    displayImage += 2;
+    guessPics.childNodes[displayImage].style.display = 'initial';
   }
 
   lettersGuessed.textContent += letterGuess.value + ' ';

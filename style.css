@@ -21,8 +21,8 @@ body {
   border: 2px solid red;
   border-radius: 15px;
   background-color: white;
-  width:700px;
-  height:190px
+  width:600px;
+  height:150px
 }
 
 .center {
@@ -49,4 +49,25 @@ body {
   height:300px;
   border: 2px solid red;
   border-radius: 15px;
+}
+
+.guessPics {
+  width:250px;
+  height:215px;
+  border: 2px solid red;
+  border-radius: 15px;
+}
+
+.displayWord {
+  font-size: 35px;
+  border: 2px solid red;
+  border-radius: 2px;
+  background-color: white;
+}
+
+.lettersGuessed {
+  font-size: 35px;
+  border: 2px solid red;
+  border-radius: 2px;
+  background-color: white;
 }

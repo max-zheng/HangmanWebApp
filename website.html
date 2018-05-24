@@ -13,8 +13,8 @@
   </head>
   <body>
 
+    <img src="logo.png" class="logo" alt="Hangman"><br>
     <div class="intro">
-      <img src="logo.png" class="logo" alt="Hangman">
       <div class="boxed">You are playing Hangman. You need 2 players. The first player will enter a secret word.
         The second player will try to guess the word by guessing letters in the word. After 5 incorrect letter guesses, you lose!
       </div><br>
@@ -27,17 +27,24 @@
     </div>
     <div class="gameStart">
       <label for="letterGuess">Guess a letter: </label>
-      <input type="text" id="letterGuess" class="letterGuess" maxlength="1"><br>
-      <input type="submit" value="Guess letter" class="guessButton"><br>
-      <img src="guesspics/0guess.jpg" id="guessPic" alt="pic" style="width:200px;height:200px;"><br><br><br>
+      <input type="text" id="letterGuess" class="letterGuess" maxlength="1">
+      <input type="submit" value="Guess letter" class="guessButton"><br><br>
+      <div class="pics">
+        <img src="guesspics/0.png" class="guessPics">
+        <img src="guesspics/1.png" class="guessPics">
+        <img src="guesspics/2.png" class="guessPics">
+        <img src="guesspics/3.png" class="guessPics">
+        <img src="guesspics/4.png" class="guessPics">
+        <img src="guesspics/5.png" class="guessPics">
+      </div>
     </div>
 
     <div class="gameVars">
       <p class="guessesLeftMessage"></p>
       <p class="gameText"></p>
-      <p class="displayWord"></p>
-      <p class="lettersGuessed"></p>
-      <p class="displayMessage"></p>
+      <span class="displayWord"></span><br><br>
+      <span class="lettersGuessed"></span><br>
+      <span class="displayMessage"></span>
     </div>
 
     <script src = "gamelogic.js"></script>
