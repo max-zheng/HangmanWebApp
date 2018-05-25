@@ -1,5 +1,8 @@
-HangmanGameLogic:
+Instructions:
+- You can play locally or host your own web server.
+- In order to play locally, simply clone this repo and within the directory, open HangmanWebsite.html
 
+HangmanGameLogic:
 - We use querySelector in order to access the class elements of HangmanWebsite within our JS code.
 - There are 3 variables that we keep track of: incorrectGuessesLeft, lettersRevealed, displayImage
   - incorrectGuessesLeft: very simple, keeps track of incorrect guesses the player has left. If this
