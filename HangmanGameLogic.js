@@ -3,185 +3,151 @@ var displayWord = document.querySelector('.displayWord');
 var lettersGuessed = document.querySelector('.lettersGuessed');
 var displayMessage = document.querySelector('.displayMessage');
 var errorMessage = document.querySelector('.errorMessage');
-
 var guessPics = document.querySelector('.pics');
-
 var wordSubmitButton = document.querySelector('.wordSubmitButton');
 var randomWordButton = document.querySelector('.randomWordButton');
 var guessButton = document.querySelector('.guessButton');
 var resetButton = document.querySelector('.resetButton');
-
-var guessCount = 5; // how many guesses player has left
+var incorrectGuessesLeft = 5; // how many guesses player has left
 var lettersRevealed = 0; // how many letters are known through guesses
-var displayImage = 1; // cycles through right side hangman graphic, corresponding to guessCount
+var displayImage = 1; // cycles through right side hangman graphic, corresponding to incorrectGuessesLeft
 var guessCharSet = new Set(); // stores set of characters so there are no duplicate guesses
-
 var intro = document.querySelector('.intro');
 var gameStart = document.querySelector('.gameStart');
-
 // wordToDisplay:
 // The blanks that display showing which letters are known and which are unknown
 // example: a _ _ l _ = a p p l e
 var wordToDisplay = "";
 var secretWord;
-
 // handle page refreshes
 gameStart.style.display = 'none';
 errorMessage.style.display = 'none';
 document.querySelector('.secretWord').focus();
-
 // parse list of english words from words.txt and stores into wordDictionary
 // used to generate a random word
 var wordDictionary;
 var req = new XMLHttpRequest();
-req.onload = function(){
-  wordDictionary = this.responseText.split('\n');
+req.onload = function () {
+    wordDictionary = this.responseText.split('\n');
 };
 req.open('GET', 'words.txt');
 req.send();
-
 // -----------------------------------------------------------------------------
-
 // helper method similar to str[index] = newChar
-function setCharAt(str,index,chr) {
-    if(index > str.length-1) return str;
-    return str.substr(0,index) + chr + str.substr(index+1);
+function setCharAt(str, index, chr) {
+    if (index > str.length - 1)
+        return str;
+    return str.substr(0, index) + chr + str.substr(index + 1);
 }
-
 // set up game in event that user enters own word
 function setUp2PlayerGame() {
-  secretWord = document.querySelector('.secretWord').value;
-  if(!isNonEmptyStr(secretWord)) {
-    errorMessage.style.display = 'initial';
-    return;
-  }
-  setupGame();
+    secretWord = document.querySelector('.secretWord').value;
+    if (!isNonEmptyStr(secretWord)) {
+        errorMessage.style.display = 'initial';
+        return;
+    }
+    setupGame();
 }
-
 // set up game in event that random word option is chosen
 function setUpRandomGame() {
-  var index = Math.floor(Math.random() * wordDictionary.length);
-  secretWord = wordDictionary[index];
-  setupGame();
+    var index = Math.floor(Math.random() * wordDictionary.length);
+    secretWord = wordDictionary[index];
+    setupGame();
 }
-
 // general game setup, toggle between into page and game page
 function setupGame() {
-  intro.style.display = 'none';
-
-  for (i = 0; i < secretWord.length; i++) {
-      wordToDisplay += "_ ";
-  }
-
-  guessesLeftMessage.textContent = "You have " + guessCount + " incorrect guesses remaining.";
-
-  displayWord.textContent = wordToDisplay;
-
-  lettersGuessed.textContent = "Letters guessed: ";
-
-  displayMessage.style.display = 'none';
-
-  gameStart.style.display = 'initial';
-  // start with 1 and skip 2 each time, every other node is a text and we only want images
-  for (var i = 1; i <= 11; i+=2) {
-    guessPics.childNodes[i].style.display = 'none';
-  }
-
-  guessPics.childNodes[displayImage].style.display = 'initial';
-
-  resetButton.style.display = 'none';
-
-  document.querySelector('.letterGuess').focus();
-
+    intro.style.display = 'none';
+    for (i = 0; i < secretWord.length; i++) {
+        wordToDisplay += "_ ";
+    }
+    guessesLeftMessage.textContent = "You have " + incorrectGuessesLeft + " incorrect guesses remaining.";
+    displayWord.textContent = wordToDisplay;
+    lettersGuessed.textContent = "Letters guessed: ";
+    displayMessage.style.display = 'none';
+    gameStart.style.display = 'initial';
+    // start with 1 and skip 2 each time, every other node is a text and we only want images
+    for (var i = 1; i <= 11; i += 2) {
+        guessPics.childNodes[i].style.display = 'none';
+    }
+    guessPics.childNodes[displayImage].style.display = 'initial';
+    resetButton.style.display = 'none';
+    document.querySelector('.letterGuess').focus();
 }
-
 // check if string is non empty and only contains alphas
 function isNonEmptyStr(str) {
-  return str.length >= 1 && str.match(/[a-z]/i);
+    return str.length >= 1 && str.match(/[a-z]/i);
 }
-
 // function to evaluate letter guess
 function guessLetter() {
-
-  // make sure letter is a-z
-  if(!isNonEmptyStr(letterGuess.value)) {
-    displayMessage.textContent = "Please guess a letter from a-z!"
-    displayMessage.style.display = 'initial';
-    return;
-  }
-
-  // if letter is has already been guessed before
-  if (guessCharSet.has(letterGuess.value)) {
-    displayMessage.textContent = "You have already guessed that letter!";
-    displayMessage.style.display = 'initial';
-    return;
-  }
-  // add letter guessed to set
-  guessCharSet.add(letterGuess.value);
-  displayMessage.style.display = 'none';
-
-  // loop through secretWord to fill in corresponding matching letters
-  var letterFound = false;
-  for (var i = 0; i < secretWord.length; i++) {
-    if(letterGuess.value === secretWord[i]) {
-      letterFound = true;
-      lettersRevealed++;
-      wordToDisplay = setCharAt(wordToDisplay,i*2,letterGuess.value);
-      displayWord.textContent = wordToDisplay;
+    // make sure letter is a-z
+    if (!isNonEmptyStr(letterGuess.value)) {
+        displayMessage.textContent = "Please guess a letter from a-z!";
+        displayMessage.style.display = 'initial';
+        return;
     }
-  }
-
-  // if letter is not in the word
-  if(letterFound === false) {
-    guessCount --;
-    guessPics.childNodes[displayImage].style.display = 'none';
-    displayImage += 2;
-    guessPics.childNodes[displayImage].style.display = 'initial';
-  }
-
-  lettersGuessed.textContent += letterGuess.value + ' ';
-  guessesLeftMessage.textContent = "You have " + guessCount + " incorrect guesses remaining.";
-
-  // after every letter guess, check if the user has won or lost
-  if(checkWinOrLoss() === false) {
-    letterGuess.focus();
-  }
+    // if letter is has already been guessed before
+    if (guessCharSet.has(letterGuess.value)) {
+        displayMessage.textContent = "You have already guessed that letter!";
+        displayMessage.style.display = 'initial';
+        return;
+    }
+    // add letter guessed to set
+    guessCharSet.add(letterGuess.value);
+    displayMessage.style.display = 'none';
+    // loop through secretWord to fill in corresponding matching letters
+    var letterFound = false;
+    for (var i = 0; i < secretWord.length; i++) {
+        if (letterGuess.value === secretWord[i]) {
+            letterFound = true;
+            lettersRevealed++;
+            wordToDisplay = setCharAt(wordToDisplay, i * 2, letterGuess.value);
+            displayWord.textContent = wordToDisplay;
+        }
+    }
+    // if letter is not in the word
+    if (letterFound === false) {
+        incorrectGuessesLeft--;
+        guessPics.childNodes[displayImage].style.display = 'none';
+        displayImage += 2;
+        guessPics.childNodes[displayImage].style.display = 'initial';
+    }
+    lettersGuessed.textContent += letterGuess.value + ' ';
+    guessesLeftMessage.textContent = "You have " + incorrectGuessesLeft + " incorrect guesses remaining.";
+    // after every letter guess, check if the user has won or lost
+    if (checkWinOrLoss() === false) {
+        letterGuess.focus();
+    }
 }
-
 function checkWinOrLoss() {
-  if(lettersRevealed === secretWord.length) {
-    alert("You win!!!");
-    guessButton.disabled = true;
-    resetButton.style.display = 'initial';
-    return true;
-  }
-  if(guessCount === 0) {
-    alert("You lose!!! The secret word was: " + secretWord);
-    guessButton.disabled = true;
-    resetButton.style.display = 'initial';
-    return true;
-  }
-  return false;
+    if (lettersRevealed === secretWord.length) {
+        alert("You win!!!");
+        guessButton.disabled = true;
+        resetButton.style.display = 'initial';
+        return true;
+    }
+    if (incorrectGuessesLeft === 0) {
+        alert("You lose!!! The secret word was: " + secretWord);
+        guessButton.disabled = true;
+        resetButton.style.display = 'initial';
+        return true;
+    }
+    return false;
 }
-
 function resetGame() {
-  displayMessage.style.display = 'none';
-  guessButton.disabled = false;
-  guessCount = 5;
-  guessCharSet = new Set();
-  lettersRevealed = 0;
-  displayImage = 1;
-  wordToDisplay = "";
-  gameStart.style.display = 'none';
-  intro.style.display = 'initial';
-  errorMessage.style.display = 'none';
-
-  document.querySelector('.secretWord').focus();
+    displayMessage.style.display = 'none';
+    guessButton.disabled = false;
+    incorrectGuessesLeft = 5;
+    guessCharSet = new Set();
+    lettersRevealed = 0;
+    displayImage = 1;
+    wordToDisplay = "";
+    gameStart.style.display = 'none';
+    intro.style.display = 'initial';
+    errorMessage.style.display = 'none';
+    document.querySelector('.secretWord').focus();
 }
-
 // -----------------------------------------------------------------------------
-
 wordSubmitButton.addEventListener('click', setUp2PlayerGame);
 randomWordButton.addEventListener('click', setUpRandomGame);
 guessButton.addEventListener('click', guessLetter);
-resetButton.addEventListener('click',resetGame);
+resetButton.addEventListener('click', resetGame);
