@@ -1,33 +1,35 @@
-var guessesLeftMessage = document.querySelector('.guessesLeftMessage');
-var displayWord = document.querySelector('.displayWord');
-var lettersGuessed = document.querySelector('.lettersGuessed');
-var displayMessage = document.querySelector('.displayMessage');
-var errorMessage = document.querySelector('.errorMessage');
-var guessPics = document.querySelector('.pics');
-var wordSubmitButton = document.querySelector('.wordSubmitButton');
-var randomWordButton = document.querySelector('.randomWordButton');
-var guessButton = document.querySelector('.guessButton');
-var resetButton = document.querySelector('.resetButton');
-var incorrectGuessesLeft = 5; // how many guesses player has left
-var lettersRevealed = 0; // how many letters are known through guesses
-var displayImage = 1; // cycles through right side hangman graphic, corresponding to incorrectGuessesLeft
-var guessCharSet = new Set(); // stores set of characters so there are no duplicate guesses
-var intro = document.querySelector('.intro');
-var gameStart = document.querySelector('.gameStart');
+const guessesLeftMessage = document.querySelector('.guessesLeftMessage');
+const displayWord = document.querySelector('.displayWord');
+const lettersGuessed = document.querySelector('.lettersGuessed');
+const displayMessage = document.querySelector('.displayMessage');
+const errorMessage = document.querySelector('.errorMessage');
+const guessPics = document.querySelector('.pics');
+const wordSubmitButton = document.querySelector('.wordSubmitButton');
+const randomWordButton = document.querySelector('.randomWordButton');
+const guessButton = document.querySelector('.guessButton');
+const resetButton = document.querySelector('.resetButton');
+const intro = document.querySelector('.intro');
+const gameStart = document.querySelector('.gameStart');
+
+let incorrectGuessesLeft = 5; // how many guesses player has left
+let lettersRevealed = 0; // how many letters are known through guesses
+let displayImage = 1; // cycles through right side hangman graphic, corresponding to incorrectGuessesLeft
+let guessCharSet = new Set(); // stores set of characters so there are no duplicate guesses
+
 // wordToDisplay:
 // The blanks that display showing which letters are known and which are unknown
 // example: a _ _ l _ = a p p l e
-var wordToDisplay = "";
-var secretWord;
+let wordToDisplay = "";
+let secretWord;
 // handle page refreshes
 gameStart.style.display = 'none';
 errorMessage.style.display = 'none';
 document.querySelector('.secretWord').focus();
 // parse list of english words from words.txt and stores into wordDictionary
 // used to generate a random word
-var wordDictionary;
-var req = new XMLHttpRequest();
-req.onload = function () {
+let wordDictionary;
+const req = new XMLHttpRequest();
+req.onload = function() {
     wordDictionary = this.responseText.split('\n');
 };
 req.open('GET', 'words.txt');
@@ -50,7 +52,7 @@ function setUp2PlayerGame() {
 }
 // set up game in event that random word option is chosen
 function setUpRandomGame() {
-    var index = Math.floor(Math.random() * wordDictionary.length);
+    let index = Math.floor(Math.random() * wordDictionary.length);
     secretWord = wordDictionary[index];
     setupGame();
 }
@@ -66,7 +68,7 @@ function setupGame() {
     displayMessage.style.display = 'none';
     gameStart.style.display = 'initial';
     // start with 1 and skip 2 each time, every other node is a text and we only want images
-    for (var i = 1; i <= 11; i += 2) {
+    for (let i = 1; i <= 11; i += 2) {
         guessPics.childNodes[i].style.display = 'none';
     }
     guessPics.childNodes[displayImage].style.display = 'initial';
@@ -83,20 +85,22 @@ function guessLetter() {
     if (!isNonEmptyStr(letterGuess.value)) {
         displayMessage.textContent = "Please guess a letter from a-z!";
         displayMessage.style.display = 'initial';
+        letterGuess.focus();
         return;
     }
     // if letter is has already been guessed before
     if (guessCharSet.has(letterGuess.value)) {
         displayMessage.textContent = "You have already guessed that letter!";
         displayMessage.style.display = 'initial';
+        letterGuess.focus();
         return;
     }
     // add letter guessed to set
     guessCharSet.add(letterGuess.value);
     displayMessage.style.display = 'none';
     // loop through secretWord to fill in corresponding matching letters
-    var letterFound = false;
-    for (var i = 0; i < secretWord.length; i++) {
+    let letterFound = false;
+    for (let i = 0; i < secretWord.length; i++) {
         if (letterGuess.value === secretWord[i]) {
             letterFound = true;
             lettersRevealed++;
